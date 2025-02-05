@@ -1,3 +1,3 @@
 //#define TAPPING_FORCE_HOLD
 #define TAPPING_TERM 250
-#define IGNORE_MOD_TAP_INTERRUPT
+// nicht länger notwendig #define IGNORE_MOD_TAP_INTERRUPT

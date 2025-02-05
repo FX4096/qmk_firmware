@@ -78,3 +78,40 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_FN3]     = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
 #endif
+
+enum custom_keycodes {
+  MOUSEJIGGLERMACRO
+};
+
+bool mouse_jiggle_mode = false;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case MOUSEJIGGLERMACRO:
+      if (record->event.pressed) {
+        if (mouse_jiggle_mode) {
+            SEND_STRING(SS_DELAY(15));
+            mouse_jiggle_mode = false;
+        } else {
+            SEND_STRING(SS_DELAY(15));
+            mouse_jiggle_mode = true;
+        }
+      } else {
+      }
+      break;
+  }
+  return true;
+}
+
+
+void matrix_scan_user(void) {
+  if (mouse_jiggle_mode) {
+    SEND_STRING(SS_DELAY(10));
+    tap_code(KC_MS_UP);
+    tap_code(KC_MS_DOWN);
+    SEND_STRING(SS_DELAY(30));
+    tap_code(KC_MS_LEFT);
+    tap_code(KC_MS_RIGHT);
+  } else { 
+  } 
+}
